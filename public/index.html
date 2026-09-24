@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zürich Central Academic Library &amp; Archives</title>
+  <meta name="description" content="Official library catalog, circulation records, and academic archives.">
+  <!-- Google Fonts: Inter & JetBrains Mono for Swiss International Style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Swiss Design Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="swiss-container">
+
+    <!-- Swiss Editorial Masthead -->
+    <header class="swiss-header">
+      <div class="masthead-top">
+        <span>Library System &bull; Campus Records</span>
+        <div class="system-status-indicator">
+          <span class="status-dot-active"></span>
+          <span>System Ready</span>
+        </div>
+      </div>
+
+      <div class="masthead-main">
+        <div>
+          <h1 class="institution-title">LIBRARY <span>HUB</span></h1>
+          <p class="institution-sub">Books, loans, and quick records for the student team</p>
+        </div>
+        <div class="masthead-meta">
+          <div>CampuS ID: LIB-01</div>
+          <div>Round 2</div>
+          <div>Debug Mode</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs (Swiss Numbered Structure) -->
+      <nav class="swiss-nav" id="swissNav">
+        <button class="swiss-tab-btn active" data-tab="catalog" id="tabBtnCatalog">
+          <span class="tab-index">01</span> BOOKS
+        </button>
+        <button class="swiss-tab-btn" data-tab="search" id="tabBtnSearch">
+          <span class="tab-index">02</span> SEARCH
+        </button>
+        <button class="swiss-tab-btn" data-tab="borrow-desk" id="tabBtnBorrow">
+          <span class="tab-index">03</span> ISSUE / RETURN
+        </button>
+        <button class="swiss-tab-btn" data-tab="register-book" id="tabBtnRegBook">
+          <span class="tab-index">04</span> ADD BOOK
+        </button>
+        <button class="swiss-tab-btn" data-tab="register-member" id="tabBtnRegMember">
+          <span class="tab-index">05</span> ADD MEMBER
+        </button>
+        <button class="swiss-tab-btn" data-tab="db-inspector" id="tabBtnDb">
+          <span class="tab-index">06</span> JSON DATA
+        </button>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="swiss-main">
+
+      <!-- =========================================================
+           01: CATALOGUE VIEW
+           ========================================================= -->
+      <section class="view-section active" id="pane-catalog">
+        <div class="section-headline">
+          <div>
+            <h2>01 / BOOK LIST</h2>
+            <p class="section-subline">See all books and whether they are available right now.</p>
+          </div>
+          <div class="section-actions">
+            <button class="swiss-btn swiss-btn-outline swiss-btn-sm" id="btnRefreshCatalog">Reload Index</button>
+          </div>
+        </div>
+
+        <div class="catalog-search-bar">
+          <input type="text" id="catalogFilterInput" class="swiss-input" placeholder="Filter holdings by keyword, author, or shelfmark...">
+        </div>
+
+        <div class="books-swiss-grid" id="booksCatalogGrid">
+          <div class="swiss-empty">Loading catalogue records...</div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           02: SEARCH & INDEX VIEW
+           ========================================================= -->
+      <section class="view-section" id="pane-search">
+        <div class="section-headline">
+          <div>
+            <h2>02 / FIND BOOK</h2>
+            <p class="section-subline">Search by ID and check if the system is returning the right result.</p>
+          </div>
+        </div>
+
+        <div class="search-swiss-grid">
+          <!-- Left Control Panel -->
+          <div class="search-sidebar">
+            <div class="panel-subheading">Quick Search</div>
+            <p class="panel-desc">Check the current in-browser list.</p>
+            <div class="form-field">
+              <label for="bookSearchInput" class="swiss-label">Book ID</label>
+              <input type="text" id="bookSearchInput" class="swiss-input" placeholder="e.g. 105">
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                <button class="swiss-btn swiss-btn-sm" id="btnExecuteSearch">Query</button>
+                <button class="swiss-btn swiss-btn-outline swiss-btn-sm" id="btnClearSearch">Clear</button>
+              </div>
+            </div>
+
+            <div class="swiss-divider"></div>
+
+            <div class="panel-subheading">API Search</div>
+            <p class="panel-desc">Send the request directly to the app backend.</p>
+            <div class="form-field">
+              <label for="apiSearchInput" class="swiss-label">Book ID</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" id="apiSearchInput" class="swiss-input" placeholder="e.g. 105">
+                <button class="swiss-btn swiss-btn-outline swiss-btn-sm" id="btnApiSearch">Fetch</button>
+              </div>
+            </div>
+
+            <div class="swiss-divider"></div>
+
+            <div class="panel-subheading">JSON Lookup</div>
+            <p class="panel-desc">Check the raw JSON result for that ID.</p>
+            <div class="form-field">
+              <label for="sqlSearchInput" class="swiss-label">Book ID</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" id="sqlSearchInput" class="swiss-input" placeholder="e.g. 105">
+                <button class="swiss-btn swiss-btn-outline swiss-btn-sm" id="btnSqlSearch">Execute</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Results Display -->
+          <div class="search-results-pane">
+            <div class="panel-subheading">Search Result</div>
+            <div id="searchResultContainer" class="swiss-result-box">
+              <div class="swiss-empty">No query executed. Enter a Book ID (e.g. 105) to retrieve.</div>
+            </div>
+
+            <div class="response-inspector" id="responseInspector" style="display: none; margin-top: 1.5rem;">
+              <div class="panel-subheading" style="margin-top: 1rem;">Raw Response:</div>
+              <pre style="background: var(--swiss-cream); border: var(--border-hairline); padding: 1rem; font-family: var(--font-mono); font-size: 11px; overflow-x: auto;"><code id="rawResponseCode"></code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           03: CIRCULATION DESK
+           ========================================================= -->
+      <section class="view-section" id="pane-borrow-desk">
+        <div class="section-headline">
+          <div>
+            <h2>03 / ISSUE / RETURN</h2>
+            <p class="section-subline">Borrow a book or return it and check the status.</p>
+          </div>
+          <div class="section-actions">
+            <button class="swiss-btn swiss-btn-outline swiss-btn-sm" id="btnRefreshBorrowRecords">Update Circulation Log</button>
+          </div>
+        </div>
+
+        <div class="circulation-swiss-layout">
+          <!-- Loan Check-Out Form -->
+          <div class="circulation-issue-form">
+            <div class="panel-subheading">Borrow a Book</div>
+            <p class="panel-desc">Pick a book and a member to issue it.</p>
+
+            <form id="formBorrowBook">
+              <div class="form-field">
+                <label for="borrowBookSelect" class="swiss-label">Select a Book</label>
+                <select id="borrowBookSelect" class="swiss-select" required>
+                  <option value="">-- Choose a book --</option>
+                </select>
+                <span class="swiss-hint">Or type the Book ID:</span>
+                <input type="number" id="manualBookIdInput" class="swiss-input" style="margin-top: 0.35rem;" placeholder="e.g. 105">
+              </div>
+
+              <div class="form-field">
+                <label for="borrowMemberSelect" class="swiss-label">Select a Member</label>
+                <select id="borrowMemberSelect" class="swiss-select" required>
+                  <option value="">-- Choose a member --</option>
+                </select>
+              </div>
+
+              <button type="submit" class="swiss-btn swiss-btn-block" id="btnSubmitBorrow">
+                Issue Book
+              </button>
+            </form>
+          </div>
+
+          <!-- Active Circulation Log Table -->
+          <div class="circulation-history-pane">
+            <div class="panel-subheading">Borrow History</div>
+            <div class="swiss-table-wrap">
+              <table class="swiss-table" id="borrowRecordsTable">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Volume Title</th>
+                    <th>Member</th>
+                    <th>Issue Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="borrowRecordsTbody">
+                  <tr><td colspan="6" class="swiss-empty">Loading circulation records...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           04: ACQUISITIONS (Register Book)
+           ========================================================= -->
+      <section class="view-section" id="pane-register-book">
+        <div class="section-headline">
+          <div>
+            <h2>04 / ADD NEW BOOK</h2>
+            <p class="section-subline">Add a book to the library list.</p>
+          </div>
+        </div>
+
+        <div class="swiss-centered-form-wrap">
+          <div class="panel-subheading">Add Book Form</div>
+          <p class="panel-desc">Fill in the information for a new book.</p>
+
+          <form id="formRegisterBook" novalidate>
+            <div class="form-field">
+              <label for="regBookId" class="swiss-label">Book ID</label>
+              <input type="text" id="regBookId" class="swiss-input" placeholder="e.g. 109">
+              <span class="swiss-hint">Use a number only.</span>
+            </div>
+
+            <div class="form-field">
+              <label for="regBookTitle" class="swiss-label">Book Title</label>
+              <input type="text" id="regBookTitle" class="swiss-input" placeholder="e.g. Structural Complexity Theory">
+            </div>
+
+            <div class="form-field">
+              <label for="regBookAuthor" class="swiss-label">Author</label>
+              <input type="text" id="regBookAuthor" class="swiss-input" placeholder="e.g. J. Balcázar, J. Díaz">
+            </div>
+
+            <div class="form-field">
+              <label for="regBookCategory" class="swiss-label">Category</label>
+              <input type="text" id="regBookCategory" class="swiss-input" placeholder="e.g. Theoretical Computer Science">
+            </div>
+
+            <button type="submit" class="swiss-btn swiss-btn-block" id="btnSubmitBook">
+              Add Book
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           05: MEMBER REGISTRY (Register Member)
+           ========================================================= -->
+      <section class="view-section" id="pane-register-member">
+        <div class="section-headline">
+          <div>
+            <h2>05 / ADD MEMBER</h2>
+            <p class="section-subline">Create a member account before issuing books.</p>
+          </div>
+        </div>
+
+        <div class="swiss-centered-form-wrap">
+          <div class="panel-subheading">New Member Form</div>
+          <p class="panel-desc">All fields are required to create a member.</p>
+
+          <form id="formRegisterMember" novalidate>
+            <div class="form-field">
+              <label for="regStudentId" class="swiss-label">Student ID</label>
+              <input type="text" id="regStudentId" class="swiss-input" placeholder="e.g. STU1005">
+            </div>
+
+            <div class="form-field">
+              <label for="regMemberName" class="swiss-label">Full Name</label>
+              <input type="text" id="regMemberName" class="swiss-input" placeholder="e.g. Clara Schneider">
+            </div>
+
+            <div class="form-field">
+              <label for="regMemberEmail" class="swiss-label">Email</label>
+              <input type="text" id="regMemberEmail" class="swiss-input" placeholder="e.g. clara.schneider@ethz.ch">
+            </div>
+
+            <div class="form-field">
+              <label for="regMemberDept" class="swiss-label">Department</label>
+              <input type="text" id="regMemberDept" class="swiss-input" placeholder="e.g. Department of Computer Science">
+            </div>
+
+            <button type="submit" class="swiss-btn swiss-btn-block" id="btnSubmitMember">
+              Add Member
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           06: JSON DATA AUDIT (Live JSON Tables)
+           ========================================================= -->
+      <section class="view-section" id="pane-db-inspector">
+        <div class="section-headline">
+          <div>
+            <h2>06 / JSON DATA CHECK</h2>
+            <p class="section-subline">See the raw JSON data and compare it with what the app shows.</p>
+          </div>
+          <div class="section-actions">
+            <button class="swiss-btn swiss-btn-outline swiss-btn-sm" id="btnRefreshDbAudit">Refresh Raw Tables</button>
+          </div>
+        </div>
+
+        <div class="audit-section-block">
+          <div class="audit-block-title">
+            <span>TABLE &bull; <code>books</code></span>
+            <span id="auditBooksCount" style="font-family: var(--font-mono); font-size: 11px;">0 rows</span>
+          </div>
+          <div class="swiss-table-wrap">
+            <table class="swiss-table" id="auditBooksTable">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>title</th>
+                  <th>author</th>
+                  <th>category</th>
+                  <th>is_available (DB)</th>
+                </tr>
+              </thead>
+              <tbody id="auditBooksTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="audit-section-block">
+          <div class="audit-block-title">
+            <span>TABLE &bull; <code>borrow_records</code></span>
+            <span id="auditBorrowsCount" style="font-family: var(--font-mono); font-size: 11px;">0 rows</span>
+          </div>
+          <div class="swiss-table-wrap">
+            <table class="swiss-table" id="auditBorrowsTable">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>book_id</th>
+                  <th>member_id</th>
+                  <th>borrow_date</th>
+                  <th>return_date</th>
+                  <th>status</th>
+                </tr>
+              </thead>
+              <tbody id="auditBorrowsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="audit-section-block">
+          <div class="audit-block-title">
+            <span>TABLE &bull; <code>members</code></span>
+            <span id="auditMembersCount" style="font-family: var(--font-mono); font-size: 11px;">0 rows</span>
+          </div>
+          <div class="swiss-table-wrap">
+            <table class="swiss-table" id="auditMembersTable">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>student_id</th>
+                  <th>name</th>
+                  <th>email</th>
+                  <th>department</th>
+                </tr>
+              </thead>
+              <tbody id="auditMembersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Modal Dialog: Book Details -->
+    <div class="swiss-modal-overlay" id="bookDetailsModal" style="display: none;">
+      <div class="swiss-modal-dialog">
+        <div class="swiss-modal-header">
+          <h3 id="modalHeaderTitle">Bibliographic Record Card</h3>
+          <button class="swiss-modal-close" id="btnCloseDetailsModal">&times;</button>
+        </div>
+        <div class="swiss-modal-body">
+          <div class="swiss-kv-row">
+            <span class="swiss-kv-label">Accession ID</span>
+            <span class="swiss-kv-value" id="detailId">--</span>
+          </div>
+          <div class="swiss-kv-row">
+            <span class="swiss-kv-label">Title</span>
+            <span class="swiss-kv-value" id="detailTitle">--</span>
+          </div>
+          <div class="swiss-kv-row">
+            <span class="swiss-kv-label">Author</span>
+            <span class="swiss-kv-value" id="detailAuthor">--</span>
+          </div>
+          <div class="swiss-kv-row">
+            <span class="swiss-kv-label">Classification</span>
+            <span class="swiss-kv-value" id="detailCategory">--</span>
+          </div>
+          <div class="swiss-kv-row">
+            <span class="swiss-kv-label">Holding Status</span>
+            <span class="swiss-kv-value" id="detailStatus">--</span>
+          </div>
+        </div>
+        <div class="swiss-modal-footer">
+          <button class="swiss-btn swiss-btn-sm" id="btnModalCloseAction">Dismiss</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div class="swiss-toast-container" id="toastContainer"></div>
+
+    <!-- Swiss Institutional Footer -->
+    <footer class="swiss-footer">
+      <div>&copy; LIBRARY HUB &bull; CAMPUS SYSTEM</div>
+      <div class="swiss-footer-meta">
+        <span>DEBUG CHALLENGE</span>
+        <button id="btnResetDb" style="background: none; border: none; font-family: var(--font-sans); font-size: 11px; text-transform: uppercase; color: var(--swiss-gray-700); cursor: pointer; text-decoration: underline;" title="Reseed initial records">
+          JSON Reseed
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Application Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

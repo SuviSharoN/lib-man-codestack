@@ -1,0 +1,760 @@
+/* ==========================================================================
+   SWISS INTERNATIONAL TYPOGRAPHIC STYLE (Die Neue Typographie)
+   Central Academic Library & Archival System
+   ========================================================================== */
+
+:root {
+  --swiss-white: #ffffff;
+  --swiss-cream: #f7f7f5;
+  --swiss-gray-50: #f2f2ef;
+  --swiss-gray-100: #e8e8e3;
+  --swiss-gray-200: #d4d4cc;
+  --swiss-gray-400: #999990;
+  --swiss-gray-700: #444440;
+  --swiss-black: #111110;
+  
+  /* Swiss Accent Red */
+  --swiss-red: #d90429;
+  --swiss-red-hover: #b50322;
+  --swiss-red-light: #ffebef;
+
+  /* Status Colors in Swiss Palette */
+  --status-available-fg: #0d5c3a;
+  --status-available-bg: #e6f4ed;
+  --status-borrowed-fg: #8a2424;
+  --status-borrowed-bg: #faebeb;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', "SFMono-Regular", Consolas, Menlo, monospace;
+
+  --border-hairline: 1px solid var(--swiss-gray-200);
+  --border-strong: 1px solid var(--swiss-black);
+  --border-heavy: 2px solid var(--swiss-black);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--swiss-cream);
+  color: var(--swiss-black);
+  line-height: 1.4;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base Layout Structure */
+.swiss-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  border-left: var(--border-hairline);
+  border-right: var(--border-hairline);
+  min-height: 100vh;
+  background: var(--swiss-white);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Header & Swiss Typographic Masthead
+   ========================================================================== */
+
+.swiss-header {
+  border-bottom: var(--border-heavy);
+  background: var(--swiss-white);
+}
+
+.masthead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1.5rem;
+  border-bottom: var(--border-hairline);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--swiss-gray-700);
+}
+
+.system-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--swiss-black);
+}
+
+.status-dot-active {
+  width: 7px;
+  height: 7px;
+  background-color: var(--swiss-red);
+}
+
+.masthead-main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  padding: 1.5rem 1.5rem 1.2rem;
+  gap: 1.25rem;
+  border-bottom: var(--border-hairline);
+}
+
+.institution-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 0.97;
+  text-transform: uppercase;
+  color: var(--swiss-black);
+}
+
+.institution-title span {
+  color: var(--swiss-red);
+}
+
+.institution-sub {
+  font-size: 13px;
+  color: var(--swiss-gray-700);
+  margin-top: 0.5rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.masthead-meta {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--swiss-gray-700);
+  line-height: 1.6;
+}
+
+/* Swiss Horizontal Navigation Tabs */
+.swiss-nav {
+  display: flex;
+  background: var(--swiss-white);
+  border-bottom: var(--border-hairline);
+  overflow-x: auto;
+}
+
+.swiss-tab-btn {
+  background: none;
+  border: none;
+  border-right: var(--border-hairline);
+  padding: 0.8rem 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--swiss-gray-700);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.swiss-tab-btn .tab-index {
+  font-family: var(--font-mono);
+  color: var(--swiss-gray-400);
+  font-size: 11px;
+}
+
+.swiss-tab-btn:hover {
+  background: var(--swiss-gray-50);
+  color: var(--swiss-black);
+}
+
+.swiss-tab-btn.active {
+  background: var(--swiss-black);
+  color: var(--swiss-white);
+}
+
+.swiss-tab-btn.active .tab-index {
+  color: var(--swiss-red);
+}
+
+/* ==========================================================================
+   Main Content Layout
+   ========================================================================== */
+
+.swiss-main {
+  flex: 1;
+  padding: 1.6rem 1.4rem 2.5rem;
+}
+
+.view-section {
+  display: none;
+}
+
+.view-section.active {
+  display: block;
+  animation: swissFadeIn 0.18s ease-out;
+}
+
+@keyframes swissFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Header Typography */
+.section-headline {
+  margin-bottom: 1.4rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1.5px solid var(--swiss-black);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.section-headline h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+.section-headline .section-subline {
+  font-size: 13px;
+  color: var(--swiss-gray-700);
+  margin-top: 0.25rem;
+}
+
+.section-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Swiss Form Controls & Buttons
+   ========================================================================== */
+
+.swiss-input {
+  background: var(--swiss-white);
+  border: var(--border-strong);
+  border-radius: 0px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--swiss-black);
+  width: 100%;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.swiss-input:focus {
+  border-color: var(--swiss-red);
+  box-shadow: inset 0 0 0 1px var(--swiss-red);
+}
+
+.swiss-select {
+  background: var(--swiss-white);
+  border: var(--border-strong);
+  border-radius: 0px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--swiss-black);
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+}
+
+.swiss-select:focus {
+  border-color: var(--swiss-red);
+}
+
+.swiss-btn {
+  background: var(--swiss-black);
+  color: var(--swiss-white);
+  border: 1px solid var(--swiss-black);
+  border-radius: 0px;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.swiss-btn:hover {
+  background: var(--swiss-red);
+  border-color: var(--swiss-red);
+}
+
+.swiss-btn-outline {
+  background: transparent;
+  color: var(--swiss-black);
+  border: var(--border-strong);
+}
+
+.swiss-btn-outline:hover {
+  background: var(--swiss-black);
+  color: var(--swiss-white);
+  border-color: var(--swiss-black);
+}
+
+.swiss-btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 11px;
+}
+
+.swiss-btn-block {
+  width: 100%;
+}
+
+.swiss-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--swiss-black);
+  margin-bottom: 0.45rem;
+}
+
+.swiss-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--swiss-gray-700);
+  margin-top: 0.35rem;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   Catalog: Modular Swiss Grid
+   ========================================================================== */
+
+.catalog-search-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.books-swiss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  border-top: var(--border-heavy);
+  border-left: var(--border-heavy);
+}
+
+.book-swiss-card {
+  border-right: var(--border-hairline);
+  border-bottom: var(--border-hairline);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--swiss-white);
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.book-swiss-card:hover {
+  background: var(--swiss-cream);
+}
+
+.card-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: var(--border-hairline);
+}
+
+.swiss-tag-id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--swiss-black);
+}
+
+.swiss-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0px;
+  display: inline-block;
+}
+
+.badge-available {
+  background: var(--status-available-bg);
+  color: var(--status-available-fg);
+  border: 1px solid var(--status-available-fg);
+}
+
+.badge-borrowed {
+  background: var(--status-borrowed-bg);
+  color: var(--status-borrowed-fg);
+  border: 1px solid var(--status-borrowed-fg);
+}
+
+.book-entry-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.book-entry-author {
+  font-size: 13px;
+  color: var(--swiss-gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.book-entry-category {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--swiss-gray-400);
+  margin-bottom: 1.5rem;
+}
+
+.card-bottom-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: var(--border-hairline);
+}
+
+/* ==========================================================================
+   Search & Query Console Layout
+   ========================================================================== */
+
+.search-swiss-grid {
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  border: var(--border-heavy);
+}
+
+@media (max-width: 960px) {
+  .search-swiss-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.search-sidebar {
+  padding: 2rem;
+  border-right: var(--border-heavy);
+  background: var(--swiss-cream);
+}
+
+.search-results-pane {
+  padding: 2rem;
+  background: var(--swiss-white);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-subheading {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--swiss-black);
+  margin-bottom: 0.5rem;
+}
+
+.panel-desc {
+  font-size: 12px;
+  color: var(--swiss-gray-700);
+  margin-bottom: 1.25rem;
+}
+
+.swiss-divider {
+  height: 1px;
+  background: var(--swiss-gray-200);
+  margin: 1.75rem 0;
+}
+
+.swiss-result-box {
+  border: var(--border-heavy);
+  padding: 1.75rem;
+  background: var(--swiss-white);
+  margin-top: 1rem;
+}
+
+.swiss-empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--swiss-gray-400);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   Circulation Desk Layout
+   ========================================================================== */
+
+.circulation-swiss-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  border: var(--border-heavy);
+}
+
+@media (max-width: 960px) {
+  .circulation-swiss-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.circulation-issue-form {
+  padding: 2rem;
+  border-right: var(--border-heavy);
+  background: var(--swiss-cream);
+}
+
+.circulation-history-pane {
+  padding: 2rem;
+  background: var(--swiss-white);
+}
+
+/* Swiss Data Tables */
+.swiss-table-wrap {
+  overflow-x: auto;
+  border: var(--border-strong);
+}
+
+.swiss-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.swiss-table th {
+  background: var(--swiss-black);
+  color: var(--swiss-white);
+  padding: 0.85rem 1rem;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+.swiss-table th:last-child {
+  border-right: none;
+}
+
+.swiss-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: var(--border-hairline);
+  border-right: var(--border-hairline);
+}
+
+.swiss-table td:last-child {
+  border-right: none;
+}
+
+.swiss-table tr:hover td {
+  background: var(--swiss-cream);
+}
+
+/* Centered Form Containers */
+.swiss-centered-form-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  border: var(--border-heavy);
+  padding: 2.5rem;
+  background: var(--swiss-white);
+}
+
+/* ==========================================================================
+   Archival DB Audit View
+   ========================================================================== */
+
+.audit-section-block {
+  margin-bottom: 2.5rem;
+}
+
+.audit-block-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: var(--border-hairline);
+}
+
+/* ==========================================================================
+   Modal Dialog (Swiss Poster Style)
+   ========================================================================== */
+
+.swiss-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 16, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.swiss-modal-dialog {
+  background: var(--swiss-white);
+  border: var(--border-heavy);
+  width: 100%;
+  max-width: 580px;
+  box-shadow: 12px 12px 0px var(--swiss-black);
+}
+
+.swiss-modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: var(--border-heavy);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.swiss-modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.swiss-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.swiss-modal-body {
+  padding: 2rem;
+}
+
+.swiss-kv-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: var(--border-hairline);
+  font-size: 13px;
+}
+
+.swiss-kv-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--swiss-gray-700);
+}
+
+.swiss-kv-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--swiss-black);
+}
+
+.swiss-modal-footer {
+  padding: 1.25rem 2rem;
+  border-top: var(--border-hairline);
+  display: flex;
+  justify-content: flex-end;
+  background: var(--swiss-cream);
+}
+
+/* ==========================================================================
+   Toast Notifications (Stark Architectural Toasts)
+   ========================================================================== */
+
+.swiss-toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.swiss-toast {
+  background: var(--swiss-white);
+  border: var(--border-heavy);
+  padding: 1rem 1.5rem;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 4px 4px 0px var(--swiss-black);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: swissSlideUp 0.15s ease-out;
+  min-width: 320px;
+}
+
+@keyframes swissSlideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.swiss-toast.toast-success {
+  border-left: 6px solid var(--status-available-fg);
+}
+
+.swiss-toast.toast-danger {
+  border-left: 6px solid var(--swiss-red);
+}
+
+.swiss-toast.toast-warning {
+  border-left: 6px solid #eab308;
+}
+
+.swiss-toast.toast-info {
+  border-left: 6px solid var(--swiss-black);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.swiss-footer {
+  border-top: var(--border-heavy);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--swiss-gray-700);
+  background: var(--swiss-cream);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.swiss-footer-meta {
+  display: flex;
+  gap: 2rem;
+}

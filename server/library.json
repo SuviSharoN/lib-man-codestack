@@ -1,0 +1,121 @@
+{
+  "books": [
+    {
+      "id": 101,
+      "title": "Duplicate Title",
+      "author": "Author",
+      "category": "Tech",
+      "is_available": 1
+    },
+    {
+      "id": 102,
+      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin",
+      "category": "Software Engineering",
+      "is_available": 1
+    },
+    {
+      "id": 103,
+      "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+      "author": "Erich Gamma et al.",
+      "category": "Software Architecture",
+      "is_available": 0
+    },
+    {
+      "id": 104,
+      "title": "Introduction to Algorithms (CLRS)",
+      "author": "Thomas H. Cormen",
+      "category": "Computer Science",
+      "is_available": 1
+    },
+    {
+      "id": 105,
+      "title": "Operating System Concepts",
+      "author": "Abraham Silberschatz",
+      "category": "Computer Science",
+      "is_available": 1
+    },
+    {
+      "id": 106,
+      "title": "Computer Networks",
+      "author": "Andrew S. Tanenbaum",
+      "category": "Networking",
+      "is_available": 1
+    },
+    {
+      "id": 107,
+      "title": "Artificial Intelligence: A Modern Approach",
+      "author": "Stuart Russell & Peter Norvig",
+      "category": "AI & Data Science",
+      "is_available": 1
+    },
+    {
+      "id": 108,
+      "title": "Database System Concepts",
+      "author": "Abraham Silberschatz & Henry F. Korth",
+      "category": "Databases",
+      "is_available": 1
+    },
+    {
+      "id": 9001,
+      "title": "",
+      "author": "",
+      "category": "",
+      "is_available": 1
+    },
+    {
+      "id": null,
+      "title": "Test Book",
+      "author": "Author",
+      "category": "General",
+      "is_available": 1
+    }
+  ],
+  "members": [
+    {
+      "id": 1,
+      "student_id": "STU1001",
+      "name": "Alex Rivera",
+      "email": "alex.rivera@campus.edu",
+      "department": "Computer Science"
+    },
+    {
+      "id": 2,
+      "student_id": "STU1002",
+      "name": "Sophia Chen",
+      "email": "sophia.chen@campus.edu",
+      "department": "Data Science"
+    },
+    {
+      "id": 3,
+      "student_id": "STU1003",
+      "name": "Liam Patel",
+      "email": "liam.patel@campus.edu",
+      "department": "Information Systems"
+    },
+    {
+      "id": 4,
+      "student_id": "STU1004",
+      "name": "Emma Vance",
+      "email": "emma.vance@campus.edu",
+      "department": "Electrical Engineering"
+    },
+    {
+      "id": 5,
+      "student_id": "STU9999",
+      "name": "Incomplete Student",
+      "email": "",
+      "department": ""
+    }
+  ],
+  "borrow_records": [
+    {
+      "id": 1,
+      "book_id": 103,
+      "member_id": 1,
+      "borrow_date": "2026-09-21T19:49:56.623Z",
+      "return_date": "2026-09-24T19:49:56.897Z",
+      "status": "RETURNED"
+    }
+  ]
+}

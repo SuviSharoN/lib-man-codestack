@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSAU - Computer Society of Anna University | CodeStack - Round 2</title>
+    <style>
+      :root {
+        --paper: #f5f3ee;
+        --ink: #161616;
+        --muted: #5a5a5a;
+        --line: #d8d0c2;
+        --panel: #f0eee7;
+        --accent: #1d1d1d;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.7;
+      }
+
+      .page {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 36px 24px 80px;
+      }
+
+      .masthead {
+        border-top: 4px solid var(--accent);
+        border-bottom: 1px solid var(--line);
+        padding: 26px 0 18px;
+        margin-bottom: 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.1rem, 5vw, 4rem);
+        line-height: 0.92;
+        letter-spacing: -0.06em;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .meta {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .meta span {
+        border: 1px solid var(--line);
+        padding: 7px 10px;
+      }
+
+      .story-title {
+        margin: 0 0 12px;
+        font-size: clamp(1.7rem, 3vw, 2.5rem);
+        letter-spacing: -0.04em;
+      }
+
+      .lead {
+        font-size: 1.06rem;
+        color: var(--ink);
+      }
+
+      .chapter {
+        margin-top: 32px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-tag {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        font-size: clamp(1.3rem, 2vw, 1.8rem);
+        letter-spacing: -0.04em;
+      }
+
+      blockquote {
+        margin: 18px 0 20px;
+        padding: 12px 0 12px 18px;
+        border-left: 3px solid var(--ink);
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      .note {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        padding: 16px 18px;
+        margin-top: 18px;
+      }
+
+      ul {
+        margin: 12px 0 0;
+        padding-left: 20px;
+      }
+
+      code {
+        font-family: Consolas, monospace;
+        background: rgba(0,0,0,0.04);
+        padding: 2px 5px;
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="masthead">
+        <p class="eyebrow">CSAU — Computer Society of Anna University</p>
+        <h1>CodeStack<br />Round 2</h1>
+        <div class="meta">
+          <span>Workflow Debugging</span>
+          <span>Library Challenge</span>
+        </div>
+      </header>
+
+      <section>
+        <h2 class="story-title">The Library That Broke on Opening Day</h2>
+        <p class="lead">
+          It is the first day of the new semester. The library team has just replaced its paper register with a digital system powered by a simple JSON file.
+        </p>
+        <blockquote>
+          The desk is ready. The books are shelved. The students are waiting. Then the system starts behaving strangely.
+        </blockquote>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Easy Level</div>
+        <h2>1. Add Book Form Is Too Weak</h2>
+        <p>
+          A librarian tries to add a book with empty title, empty author, or a bad ID value.
+        </p>
+        <p>
+          The form still accepts the input and creates a broken record.
+        </p>
+        <div class="note">
+          <strong>What to notice:</strong> The form should not allow obviously incomplete or invalid values.
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Easy Level</div>
+        <h2>2. Duplicate Book IDs Are Allowed</h2>
+        <p>
+          The same book ID is entered twice. The app allows it and creates confusion in the library list.
+        </p>
+        <div class="note">
+          <strong>What to notice:</strong> The app should reject duplicates instead of silently accepting them.
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Easy Level</div>
+        <h2>3. Member Registration Accepts Broken Data</h2>
+        <p>
+          A student tries to register without email or department information.
+        </p>
+        <p>
+          The app still saves the member as if the data were complete.
+        </p>
+        <div class="note">
+          <strong>What to notice:</strong> Missing important user information should be blocked early.
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Easy Level</div>
+        <h2>4. Search Returns the Wrong Book</h2>
+        <p>
+          A professor asks for book 105, but the system shows a different book entirely.
+        </p>
+        <div class="note">
+          <strong>What to notice:</strong> The result should match the requested book, not a nearby one.
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Easy Level</div>
+        <h2>5. Clearing the Search Does Not Clear the Result</h2>
+        <p>
+          The user clears the input field, but the old result remains on the page.
+        </p>
+        <div class="note">
+          <strong>What to notice:</strong> The UI should reset correctly when the input is empty.
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Easy Level</div>
+        <h2>6. Return Action Leaves the Book in the Wrong State</h2>
+        <p>
+          A user returns a book, but the book still appears borrowed.
+        </p>
+        <div class="note">
+          <strong>What to notice:</strong> The state should be restored after a return action.
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Medium Level</div>
+        <h2>7. The App Sends a Different ID Than the User Typed</h2>
+        <p>
+          The user enters one ID, but the request goes out with a different value.
+        </p>
+        <p>
+          This is a flow bug: the value is being altered before it reaches the backend.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Medium Level</div>
+        <h2>8. Borrow Changes the Wrong Record</h2>
+        <p>
+          A student borrows one book, but another book changes status.
+        </p>
+        <p>
+          The problem is not visible from the form alone. The correct record must be traced through the request flow.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Medium Level</div>
+        <h2>9. The Search Logic Uses the Wrong Matching Rule</h2>
+        <p>
+          The app intends to find an exact match, but the logic behaves like a broader comparison instead.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Medium Level</div>
+        <h2>10. The UI and Data Disagree</h2>
+        <p>
+          The form and the JSON state do not match after an action. The screen says one thing, but the underlying data says another.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Medium Level</div>
+        <h2>11. The Details Panel Shows Missing or Wrong Data</h2>
+        <p>
+          The item exists, but the details section shows blank values or mismatched information.
+        </p>
+        <p>
+          This usually means the response and the UI contract are not aligned.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Hard Level</div>
+        <h2>12. Borrow State and Book Status Drift Apart</h2>
+        <p>
+          The borrow log says a loan happened, but the actual book still appears available.
+        </p>
+        <p>
+          This is a deeper state bug and requires checking what really changed after the action.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Hard Level</div>
+        <h2>13. The App Shows Success Even When the Action Fails</h2>
+        <p>
+          The user receives a success message after a broken request.
+        </p>
+        <p>
+          The UI is trusting the wrong signal instead of checking whether the underlying action really worked.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Mission</div>
+        <h2>Your Task</h2>
+        <p>
+          Work through the list in order. Start with the easiest visible issues, then follow the data flow through the request and the JSON file. The goal is to understand the workflow, not memorize exact code patterns.
+        </p>
+        <p>
+          If the app is wrong, the cause is usually in one layer of the flow: input, request, logic, state, or response.
+        </p>
+      </section>
+
+      <section class="chapter">
+        <div class="section-tag">Main Sections</div>
+        <h2>You Will Test</h2>
+        <ul>
+          <li>Add Book</li>
+          <li>Add Member</li>
+          <li>Search</li>
+          <li>Issue / Return</li>
+          <li>JSON Data</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

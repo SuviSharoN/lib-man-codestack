@@ -1,0 +1,25 @@
+{
+  "name": "library-management-system-round2",
+  "version": "1.0.0",
+  "description": "Library Management System with 15 Intentionally Introduced Bugs for Round 2 Debugging Competition",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "node tests/verify.js",
+    "verify": "node tests/verify.js",
+    "reset-db": "node -e \"require('./server/db').resetDatabase()\""
+  },
+  "keywords": [
+    "debugging",
+    "competition",
+    "round-2",
+    "library-management"
+  ],
+  "author": "Club Technical Team",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.21.2"
+  }
+}
